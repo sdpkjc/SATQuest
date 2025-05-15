@@ -14,7 +14,7 @@ setup(
     packages=find_packages("."),
     python_requires=">=3.9",
     install_requires=[
-        "python-sat>=1.8.dev14",
+        "python-sat==1.8.dev14",
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
