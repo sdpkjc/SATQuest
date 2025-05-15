@@ -39,9 +39,9 @@ python eval_model.py \
     --exp-name {YOUR_EXP_NAME} \
     --wandb-project "SATQuest-Eval" \
     --hf-dataset-name "sdpkjc/SATQuest" \
-    --p-type-list "SATSP" \
-    --q-type-list "math" \
-    --llm-model "gpt-4" \
+    --p-type-list SATSP \
+    --q-type-list math \
+    --llm-model "gpt-4o" \
     --max-tokens 16384 \
     --temperature 0.6 \
     --num-example 10 \
@@ -78,12 +78,8 @@ pip install git+https://github.com/huggingface/trl.git@aaf396  # for reproducibi
 pip install datasets vllm tyro
 
 # Run RFT training
-python rft.py \
-    --model-id "Qwen/Qwen2.5-7B-Instruct" \
-    --p-list "SATSP" \
-    --q-list "math" \
-    --exp-name {YOUR_EXP_NAME} \
-    --server-ip "0.0.0.0"
+CUDA_VISIBLE_DEVICES=0,1,2,3 nohup trl vllm-serve --model "Qwen/Qwen2.5-7B-Instruct" --tensor_parallel_size 4 --max_model_len 16384  --gpu_memory_utilization 0.9 --enable_prefix_caching True &
+CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch --num-processes 4 --config-file zero3.yaml rft.py --model-id "Qwen/Qwen2.5-7B-Instruct" --p-list SATSP --q-list math --exp-name "test" --server-ip "0.0.0.0"
 ```
 
 ### RFT Parameters
