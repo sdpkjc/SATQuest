@@ -95,10 +95,12 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch --num-processes 4 --config-file z
 ## Citation
 
 ```bibtex
-@misc{SATQuest,
+@misc{satquest,
   author = {Yanxiao Zhao, Yaqian Li, Zihao Bo, Rinyoichi Takezoe, Haojia Hui, Mo Guang, Lei Ren, Xiaolin Qin, Kaiwen Long},
   title = {SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs},
   year = {2025},
+  publisher = {GitHub},
+  journal = {GitHub repository},
   howpublished = {\url{https://github.com/sdpkjc/SATQuest}},
 }
 ```
