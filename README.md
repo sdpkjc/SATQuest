@@ -1,5 +1,9 @@
 # SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
 
+[Preprint Paper](./SATQuest-paper.pdf)  | [Datasets](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53) | [PyPI](https://pypi.org/project/satquest/)
+
+![pipeline](./satquest-pipeline.png)
+
 ## 🚀 Quickstart
 
 ```python
@@ -65,10 +69,7 @@ python eval_model.py \
 - `cnf-shuffle`: Whether to shuffle CNF formulas
 - `n-repeat`: Number of times to repeat evaluation
 
-The evaluation results will be logged to Weights & Biases, including:
-- Correctness of answers
-- Format correctness
-- Detailed evaluation metrics
+The evaluation results will be logged to Weights & Biases.
 
 ## Reinforcement Fine-Tuning (RFT)
 
@@ -86,25 +87,18 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch --num-processes 4 --config-file z
 
 - `model-id`: Base model to fine-tune (default: "Qwen/Qwen2.5-7B-Instruct")
 - `p-list`: Problem types for training (e.g., "SATSP", "MaxSAT", "MCS", "MUS", "SATDP_SAT", "SATDP_UNSAT")
-- `q-list`: Question types for training (e.g., "math", "story")
+- `q-list`: Question formats for training (e.g., "math", "story")
 - `exp-name`: Name of your experiment
 - `server-ip`: IP address for VLLM server
 
-### Training Details
 
-The RFT process uses GRPO (Generative Reinforcement Policy Optimization) with the following features:
+## Citation
 
-- **Reward Functions**:
-  - Score reward: Evaluates answer correctness
-  - Tag count reward: Ensures proper formatting with `<think>` and `<answer>` tags
-  - Format reward: Checks overall response structure
-
-- **Training Configuration**:
-  - Uses VLLM for efficient inference
-  - Gradient checkpointing enabled
-  - BF16 mixed precision training
-  - Cosine learning rate scheduler
-  - Maximum prompt length: 2048 tokens
-  - Maximum completion length: 8192 tokens
-
-The model is trained on the "sdpkjc/SATQuest-RFT-3k" dataset, which contains examples for various problem and question types.
+```bibtex
+@misc{SATQuest,
+  author = {Yanxiao Zhao, Yaqian Li, Zihao Bo, Rinyoichi Takezoe, Haojia Hui, Mo Guang, Lei Ren, Xiaolin Qin, Kaiwen Long},
+  title = {SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs},
+  year = {2025},
+  howpublished = {\url{https://github.com/sdpkjc/SATQuest}},
+}
+```
