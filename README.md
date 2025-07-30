@@ -1,6 +1,10 @@
 # SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
 
-[Preprint Paper](./SATQuest-paper.pdf)  | [Datasets](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53) | [PyPI](https://pypi.org/project/satquest/)
+[Preprint Paper](./SATQuest-paper.pdf)
+
+[![License MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-sdpkjc/SATQuest-181717?logo=github)](https://github.com/sdpkjc/SATQuest)
+[![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
 
 ![pipeline](./satquest-pipeline.png)
 
@@ -12,15 +16,21 @@
 
 from datasets import load_dataset
 from satquest import CNF, create_problem, create_question
-cnf = CNF(dimacs=load_dataset('sdpkjc/SATQuest', split='test')[0]['sat_dimacs'])
+
+item = load_dataset('sdpkjc/SATQuest', split='test')[0]
+cnf = CNF(dimacs=item['sat_dimacs'])
 # cnf.shuffle()
-P, Q = create_problem('SATSP', cnf), create_question('math')
-prompt = P.accept(Q)
-answer = P.solution # LLM(prompt)
-reward = int(P.check(answer))
+
+problem = create_problem('SATSP', cnf) # or 'SATDP', 'MaxSAT', 'MCS', 'MUS'
+question = create_question('math')  # or 'dimacs', 'story', 'dualstory'
+prompt = problem.accept(question)
+answer = problem.solution  # reference answer
+reward = int(problem.check(answer))  # 1 if answer is correct, 0 otherwise
 ```
 
 ## Dataset Generation
+
+[![Dataset on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/dataset-on-hf-sm.svg)]([https://huggingface.co/sdpkjc/](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53))
 
 ```bash
 # Install dependencies
@@ -95,7 +105,7 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch --num-processes 4 --config-file z
 ## Citation
 
 ```bibtex
-@misc{satquest,
+@misc{satquest2025,
   author = {Yanxiao Zhao, Yaqian Li, Zihao Bo, Rinyoichi Takezoe, Haojia Hui, Mo Guang, Lei Ren, Xiaolin Qin, Kaiwen Long},
   title = {SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs},
   year = {2025},
