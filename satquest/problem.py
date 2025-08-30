@@ -1,4 +1,3 @@
-import traceback
 from abc import ABC, abstractmethod
 from typing import Any, Generator
 
@@ -68,7 +67,7 @@ class SATDP(Problem):
                     self._solution = str(int(solver.solve()))
                     self._solver_metadata = {**solver.accum_stats(), "solvers": (SAT_SOLVER_NAME,)}
             except Exception:
-                traceback.print_exc()
+                pass
         return self._solution
 
     def solution_enumerate(self) -> Generator[str, None, None]:
@@ -83,7 +82,7 @@ class SATDP(Problem):
             assert self.format_check(answer)
             return answer == str(self.solution)
         except Exception:
-            traceback.print_exc()
+            pass
         return False
 
     def format_check(self, answer: str) -> bool:
@@ -110,7 +109,7 @@ class SATSP(Problem):
                         self._solution = "".join(["1" if iv > 0 else "0" for iv in solver.get_model()])
                     self._solver_metadata = {**solver.accum_stats(), "solvers": (SAT_SOLVER_NAME,)}
             except Exception:
-                traceback.print_exc()
+                pass
         return self._solution
 
     def solution_enumerate(self) -> Generator[str, None, None]:
@@ -130,7 +129,7 @@ class SATSP(Problem):
             with Solver(name=SAT_SOLVER_NAME, bootstrap_with=self.cnf.clauses) as solver:
                 return solver.solve(assumptions=[(i + 1) if ai == "1" else -(i + 1) for i, ai in enumerate(answer)])
         except Exception:
-            traceback.print_exc()
+            pass
         return False
 
     def format_check(self, answer: str) -> bool:
@@ -156,7 +155,7 @@ class MaxSAT(Problem):
                     self._solver_metadata = {**solver.oracle.accum_stats(), "solvers": (SAT_SOLVER_NAME, "RC2")}
                     self._solution = "".join(["1" if iv > 0 else "0" for iv in solver.model])
             except Exception:
-                traceback.print_exc()
+                pass
         return self._solution
 
     def solution_enumerate(self) -> Generator[str, None, None]:
@@ -189,7 +188,7 @@ class MaxSAT(Problem):
                 )
                 return answer_cost == solver.cost
         except Exception:
-            traceback.print_exc()
+            pass
         return False
 
     def format_check(self, answer: str) -> bool:
@@ -241,7 +240,7 @@ class MCS(Problem):
                         return False
             return True
         except Exception:
-            traceback.print_exc()
+            pass
         return False
 
     def format_check(self, answer: str) -> bool:
@@ -297,7 +296,7 @@ class MUS(Problem):
                         return False
             return True
         except Exception:
-            traceback.print_exc()
+            pass
         return False
 
     def format_check(self, answer: str) -> bool:

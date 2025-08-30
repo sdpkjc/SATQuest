@@ -50,12 +50,3 @@ class CNF:
         for i in range(len(self.clauses)):
             self.clauses[i].sort(key=lambda x: abs(x))
         self.clauses.sort()
-
-
-if __name__ == "__main__":
-    clauses = [[1, 2], [-1, 2], [-3, -2, 1], [3], [-3, -1]]
-    cnf = CNF(clauses=clauses)
-    cnf = CNF(dimacs=cnf.dimacs)
-    cnf.sort()
-    cnf.shuffle()
-    print(cnf.clauses, cnf.nv, cnf.is_sat)

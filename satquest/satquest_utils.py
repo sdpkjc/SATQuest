@@ -30,8 +30,8 @@ def re_matcher(content_output: str, pattern: str) -> str:
         matches = list(match)
         if matches:
             final_answer = matches[-1].group(1)
-    except Exception as e:
-        print(f"Error while matching answer: {e}")
+    except Exception:
+        pass
     return final_answer
 
 
