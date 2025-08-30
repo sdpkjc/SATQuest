@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="satquest",
-    version="0.1.0",
+    version="0.1.1",
     author="Yanxiao Zhao",
     author_email="pazyx728@gmail.com",
     description="SATQuest",
