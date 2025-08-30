@@ -1,0 +1,68 @@
+[project]
+name = "satquest"
+version = "0.1.2"
+description = "A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+keywords = [
+  "LLM", "reasoning", "evaluation", "reinforcement-learning",
+]
+authors = [{ name = "Yanxiao Zhao", email = "pazyx728@gmail.com" }]
+maintainers = [{ name = "Yanxiao Zhao", email = "pazyx728@gmail.com" }]
+
+dependencies = [
+    "python-sat==1.8.dev14",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+
+  "License :: OSI Approved :: MIT License",
+
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  'Programming Language :: Python :: 3 :: Only',
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+]
+eval = [
+    "datasets>=4.0.0",
+    "openai==1.97.1",
+    "tyro>=0.9.30",
+    "vllm==0.8.5",
+    "weave==0.51.56",
+]
+gen = [
+    "datasets>=4.0.0",
+    "numpy>=2.2.6",
+    "tyro>=0.9.30",
+]
+rft = [
+    "datasets>=4.0.0",
+    "deepspeed>=0.17.5",
+    "trl",
+    "tyro>=0.9.30",
+    "vllm==0.8.5",
+]
+
+[tool.uv.sources]
+trl = { git = "https://github.com/huggingface/trl.git", rev = "aaf39604ba18a79965f1c25ab41378770c4bfcad" }
+
+
+[project.urls]
+Homepage = "https://github.com/sdpkjc/satquest"
+Documentation = "https://github.com/sdpkjc/satquest#readme"
+Source = "https://github.com/sdpkjc/satquest"
+Issues = "https://github.com/sdpkjc/satquest/issues"
