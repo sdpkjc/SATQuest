@@ -38,7 +38,7 @@ reward = int(problem.check(answer))  # 1 if answer is correct, 0 otherwise
 # 1
 ```
 
-## Dataset Generation
+## 🏭 Dataset Generation
 
 [![Dataset on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/dataset-on-hf-sm.svg)]([https://huggingface.co/sdpkjc/](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53))
 
@@ -49,7 +49,7 @@ uv run --group gen gen_cnf_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
 uv run --group gen gen_cnf_rft_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
 ```
 
-## Evaluation
+## 📊 Evaluation
 
 ```bash
 # Run evaluation
@@ -85,7 +85,7 @@ uv run --group eval eval_model.py \
 
 The evaluation results will be logged to Weights & Biases.
 
-## Reinforcement Fine-Tuning (RFT)
+## 🏄 Reinforcement Fine-Tuning (RFT)
 
 ```bash
 # Run RFT training
@@ -102,7 +102,7 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processe
 - `server-ip`: IP address for VLLM server
 
 
-## Citation
+## 🔖 Citing SATQuest
 
 ```bibtex
 @misc{satquest2025,
