@@ -33,23 +33,17 @@ reward = int(problem.check(answer))  # 1 if answer is correct, 0 otherwise
 [![Dataset on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/dataset-on-hf-sm.svg)]([https://huggingface.co/sdpkjc/](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53))
 
 ```bash
-# Install dependencies
-pip install datasets numpy tyro
-
 # Run dataset generation
-python gen_cnf_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
+uv run --group gen gen_cnf_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
 
-python gen_cnf_rft_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
+uv run --group gen gen_cnf_rft_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
 ```
 
 ## Evaluation
 
 ```bash
-# Install dependencies
-pip install datasets weave wandb tyro openai
-
 # Run evaluation
-python eval_model.py \
+uv run --group eval eval_model.py \
     --exp-name {YOUR_EXP_NAME} \
     --wandb-project "SATQuest-Eval" \
     --hf-dataset-name "sdpkjc/SATQuest" \
@@ -84,13 +78,9 @@ The evaluation results will be logged to Weights & Biases.
 ## Reinforcement Fine-Tuning (RFT)
 
 ```bash
-# Install dependencies
-pip install git+https://github.com/huggingface/trl.git@aaf396  # for reproducibility
-pip install datasets vllm tyro
-
 # Run RFT training
-CUDA_VISIBLE_DEVICES=0,1,2,3 nohup trl vllm-serve --model "Qwen/Qwen2.5-7B-Instruct" --tensor_parallel_size 4 --max_model_len 16384  --gpu_memory_utilization 0.9 --enable_prefix_caching True &
-CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch --num-processes 4 --config-file zero3.yaml rft.py --model-id "Qwen/Qwen2.5-7B-Instruct" --p-list SATSP --q-list math --exp-name "test" --server-ip "0.0.0.0"
+CUDA_VISIBLE_DEVICES=0,1,2,3 nohup uv run --group rft trl vllm-serve --model "Qwen/Qwen2.5-7B-Instruct" --tensor_parallel_size 4 --max_model_len 16384  --gpu_memory_utilization 0.9 --enable_prefix_caching True &
+CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processes 4 --config-file zero3.yaml rft.py --model-id "Qwen/Qwen2.5-7B-Instruct" --p-list SATSP --q-list math --exp-name "test" --server-ip "0.0.0.0"
 ```
 
 ### RFT Parameters

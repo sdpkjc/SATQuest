@@ -9,8 +9,8 @@ import weave
 from datasets import load_dataset
 from weave import Evaluation
 
+from llm_inference import llm_inference
 from satquest import CNF, Problem, create_problem, create_question
-from SATQuest.llm_inference import llm_inference
 from satquest.satquest_utils import (  # noqa
     ANSWER_PATTERN,
     QUERY_TEMPLATE,
