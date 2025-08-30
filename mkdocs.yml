@@ -20,7 +20,7 @@ theme:
     # - navigation.sections
     - content.code.annotate
     - header.autohide
-  # custom_dir: docs/overrides
+  custom_dir: docs/overrides
   # favicon: imgs/logo.svg
   icon:
       repo: fontawesome/brands/github
@@ -34,7 +34,7 @@ extra:
   social:
     - icon: fontawesome/solid/house-chimney
       link: https://satquest.sdpkjc.me
-      name: satquest homepage
+      name: SATQuest homepage
     - icon: fontawesome/solid/envelope
       link: mailto:hi@sdpkjc.com
       name: sdpkjc's email
@@ -48,7 +48,7 @@ extra:
     #   link: https://report.abcdrl.xyz/
     #   name: wandb reports
 
-repo_name: sdpkjc/satquest
+repo_name: sdpkjc/SATQuest
 repo_url: https://github.com/sdpkjc/satquest
 copyright: Copyright &copy; 2025 SATQuest
 plugins:
