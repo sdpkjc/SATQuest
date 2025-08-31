@@ -1,12 +1,4 @@
-# SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
-
-[Preprint Paper](./SATQuest-paper.pdf)
-
-[![License MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
-[![GitHub Repo](https://img.shields.io/badge/GitHub-sdpkjc/SATQuest-181717?logo=github)](https://github.com/sdpkjc/SATQuest)
-[![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
-
-![pipeline](./satquest-pipeline.png)
+# **SATQuest**: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
 
 ## 🚀 Quickstart
 
