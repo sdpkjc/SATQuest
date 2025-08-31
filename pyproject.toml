@@ -3,7 +3,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
-name = "satquest"
+name = "SATQuest"
 dynamic = ["version"]
 description = "A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs"
 readme = "README.md"
