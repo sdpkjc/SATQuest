@@ -1,9 +1,11 @@
+name: Publish to TestPyPI with uv
+
 on:
   push:
     branches: ["**"]  
     tags: ["*"]
   pull_request:
-    branches: ["**"]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -20,7 +22,8 @@ jobs:
     environment:
       name: testpypi
       url: https://test.pypi.org/p/SATQuest
-
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
