@@ -38,13 +38,10 @@ jobs:
           python-version: "3.12"
           enable-cache: true
 
-      - name: Show package version
+      - name: Build distributions
         run: 
           export SETUPTOOLS_SCM_PRETEND_VERSION="$(uvx hatch version)$(date +%Y%m%d%H%M%S)" &&
-          uvx hatch version
-
-      - name: Build distributions
-        run: uv build --no-sources
+          uv build --no-sources
 
       - name: Publish to TestPyPI (trusted publishing via OIDC)
         run: >
