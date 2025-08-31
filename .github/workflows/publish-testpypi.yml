@@ -23,6 +23,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+
+      - name: Show Git state (debug)
+        run: |
+          git describe --tags --always --dirty || true
+          git tag -l || true
+          git branch -a || true
 
       - name: Install uv (and Python)
         uses: astral-sh/setup-uv@v6
