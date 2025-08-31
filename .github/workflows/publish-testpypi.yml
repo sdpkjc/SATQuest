@@ -42,7 +42,9 @@ jobs:
         run: uv build --no-sources
 
       - name: Show package version
-        run: uvx hatch version
+        run: 
+          export SETUPTOOLS_SCM_PRETEND_VERSION="$(uvx hatch version)$(date +%Y%m%d%H%M%S)" &&
+          uvx hatch version
 
       - name: Publish to TestPyPI (trusted publishing via OIDC)
         run: >

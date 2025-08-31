@@ -17,7 +17,7 @@ theme:
         name: Switch to light mode
   language: en
   features:
-    # - navigation.sections
+    - navigation.sections
     - content.code.annotate
     - header.autohide
   custom_dir: docs/overrides
@@ -60,17 +60,13 @@ plugins:
       type: timeago
       fallback_to_build_date: true
 
-# nav:
-#   - Overview:
-#     - Introduction: index.md
-#     - Feature: features.md
-#     - Abstractions: abstractions.md
-#   - Tutorial:
-#     - Installation: install.md
-#     - Run: run.md
-#     - Modify: modify.md
-#   - Reference:
-#     - Reference Material: ref.md
+nav:
+  - Overview: index.md
+  - Leadboard: leaderboard.md
+  - Examples: examples.md
+  - Dataset: dataset.md
+  - Evaluate: evaluate.md
+  - Finetuning: finetuning.md
 
 
 markdown_extensions:
