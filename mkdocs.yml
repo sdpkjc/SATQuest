@@ -1,0 +1,97 @@
+site_name: SATQuest
+site_url: https://satquest.sdpkjc.me
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: white
+      accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: black
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  language: en
+  features:
+    - navigation.sections
+    - content.code.annotate
+    - header.autohide
+  custom_dir: docs/overrides
+  # favicon: imgs/logo.svg
+  icon:
+      repo: fontawesome/brands/github
+      # logo: logo
+edit_uri: edit/main/docs/
+
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+  social:
+    - icon: fontawesome/solid/house-chimney
+      link: https://satquest.sdpkjc.me
+      name: SATQuest homepage
+    - icon: fontawesome/solid/envelope
+      link: mailto:hi@sdpkjc.com
+      name: sdpkjc's email
+    - icon: fontawesome/brands/github
+      link: https://github.com/sdpkjc/satquest
+      name: github
+    - icon: simple/python
+      link: https://pypi.org/project/satquest
+      name: pypi
+    # - icon: simple/weightsandbiases
+    #   link: https://report.abcdrl.xyz/
+    #   name: wandb reports
+
+repo_name: sdpkjc/SATQuest
+repo_url: https://github.com/sdpkjc/satquest
+copyright: Copyright &copy; 2025 SATQuest
+plugins:
+  - search:
+      lang:
+        - en
+  - glightbox
+  - git-revision-date-localized:
+      type: timeago
+      fallback_to_build_date: true
+
+nav:
+  - Overview: index.md
+  - Leadboard: leaderboard.md
+  - Examples: examples.md
+  - Datasets: datasets.md
+  - Evaluate: evaluate.md
+  - Finetuning: finetuning.md
+
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - attr_list
+  - md_in_html
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  # - pymdownx.emoji:
+      # emoji_index: !!python/name:materialx.emoji.twemoji
+      # emoji_generator: !!python/name:materialx.emoji.to_svg
+      # options:
+      #   custom_icons:
+      #     - docs/overrides/.icons

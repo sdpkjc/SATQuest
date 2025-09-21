@@ -1,6 +1,10 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
 [project]
-name = "satquest"
-version = "0.1.2"
+name = "SATQuest"
+dynamic = ["version"]
 description = "A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -35,6 +39,9 @@ classifiers = [
 
 [dependency-groups]
 dev = [
+    "mkdocs-git-revision-date-localized-plugin>=1.4.7",
+    "mkdocs-glightbox>=0.4.0",
+    "mkdocs-material>=9.6.18",
     "pre-commit>=4.3.0",
 ]
 eval = [
@@ -66,3 +73,7 @@ Homepage = "https://github.com/sdpkjc/satquest"
 Documentation = "https://github.com/sdpkjc/satquest#readme"
 Source = "https://github.com/sdpkjc/satquest"
 Issues = "https://github.com/sdpkjc/satquest/issues"
+
+[tool.hatch.version]
+source = "vcs"
+raw-options = { local_scheme = "no-local-version" }

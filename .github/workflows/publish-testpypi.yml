@@ -1,0 +1,51 @@
+name: Publish to TestPyPI with uv
+
+on:
+  push:
+    branches: ["**"]  
+    tags: ["*"]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    name: Build & Publish (TestPyPI)
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/SATQuest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Show Git state (debug)
+        run: |
+          git describe --tags --always --dirty || true
+          git tag -l || true
+          git branch -a || true
+
+      - name: Install uv (and Python)
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Build distributions
+        run: 
+          export SETUPTOOLS_SCM_PRETEND_VERSION="$(uvx hatch version)$(date +%Y%m%d%H%M%S)" &&
+          uv build --no-sources
+
+      - name: Publish to TestPyPI (trusted publishing via OIDC)
+        run: >
+          uv publish
+          --publish-url https://test.pypi.org/legacy/
+          --check-url https://test.pypi.org/simple/
+          --trusted-publishing automatic
