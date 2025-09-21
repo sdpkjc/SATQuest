@@ -64,7 +64,7 @@ nav:
   - Overview: index.md
   - Leadboard: leaderboard.md
   - Examples: examples.md
-  - Dataset: dataset.md
+  - Datasets: datasets.md
   - Evaluate: evaluate.md
   - Finetuning: finetuning.md
 
