@@ -75,7 +75,12 @@ The evaluation results will be logged to Weights & Biases.
 ```bash
 # Run RFT training
 CUDA_VISIBLE_DEVICES=0,1,2,3 nohup uv run --group rft trl vllm-serve --model "Qwen/Qwen2.5-7B-Instruct" --tensor_parallel_size 4 --max_model_len 16384  --gpu_memory_utilization 0.9 --enable_prefix_caching True &
-CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processes 4 --config-file zero3.yaml rft.py --model-id "Qwen/Qwen2.5-7B-Instruct" --p-list SATSP --q-list math --exp-name "test" --server-ip "0.0.0.0"
+
+CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processes 4 --config-file zero3.yaml rft.py \
+    --model-id "Qwen/Qwen2.5-7B-Instruct" \
+    --p-list SATSP --q-list math \
+    --server-ip "0.0.0.0" \
+    --exp-name "test"
 ```
 
 
