@@ -1,12 +1,22 @@
 # SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
 
-[![License MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
+<div align="center">
+
+<img src="./docs/media/satquest.png" width="450">
+
+<br>
+
+[![License](https://img.shields.io/pypi/l/satquest)](https://github.com/sdpkjc/satquest)
 [![arXiv](https://img.shields.io/badge/arXiv-2509.00930-b31b1b.svg)](https://arxiv.org/abs/2509.00930)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-sdpkjc/SATQuest-181717?logo=github)](https://github.com/sdpkjc/SATQuest)
 [![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
 
-![satquest](./docs/media/satquest.png)
+[![docs](https://img.shields.io/github/deployments/sdpkjc/SATQuest/Production?label=docs&logo=vercel)](https://SATQuest.sdpkjc.com/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![python versions](https://img.shields.io/pypi/pyversions/satquest)](https://pypi.org/project/satquest)
 
+</div>
 
 ## 🚀 Quickstart
 
