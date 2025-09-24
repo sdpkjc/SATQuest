@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs"
+authors:
+  - name: "Yanxiao Zhao"
+  - name: "Yaqian Li"
+  - name: "Zihao Bo"
+  - name: "Rinyoichi Takezoe"
+  - name: "Haojia Hui"
+  - name: "Mo Guang"
+  - name: "Lei Ren"
+  - name: "Xiaolin Qin"
+  - name: "Kaiwen Long"
+year: 2025
+url: "https://arxiv.org/abs/2509.00930"
+keywords:
+  - "cs.AI"
+  - "logical reasoning"
+  - "LLMs"
+  - "evaluation"
+  - "reinforcement fine-tuning"
+  - "verifier"
+preferred-citation:
+  type: article
+  title: "SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs"
+  authors:
+    - name: "Yanxiao Zhao"
+    - name: "Yaqian Li"
+    - name: "Zihao Bo"
+    - name: "Rinyoichi Takezoe"
+    - name: "Haojia Hui"
+    - name: "Mo Guang"
+    - name: "Lei Ren"
+    - name: "Xiaolin Qin"
+    - name: "Kaiwen Long"
+  year: 2025
+  journal: "arXiv"
+  identifiers:
+    - type: other
+      value: "arXiv:2509.00930"
+      description: "arXiv ID"
+    - type: url
+      value: "https://arxiv.org/abs/2509.00930"
