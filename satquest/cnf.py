@@ -1,13 +1,13 @@
 import random
 
-from pysat.formula import CNF as PysatCNF
-from pysat.solvers import Solver
+from pysat.formula import CNF as PysatCNF # type: ignore
+from pysat.solvers import Solver # type: ignore
 
 from satquest.constants import SAT_SOLVER_NAME
 
 
 class CNF:
-    def __init__(self, clauses: list = None, dimacs: str = None):
+    def __init__(self, clauses: list | None = None, dimacs: str | None = None):
         assert clauses or dimacs
         if clauses:
             self.cnf = PysatCNF(from_clauses=clauses)
@@ -38,7 +38,7 @@ class CNF:
                 self._is_sat = solver.solve()
         return self._is_sat
 
-    def shuffle(self, seed: int = None) -> None:
+    def shuffle(self, seed: int | None = None) -> None:
         self._is_sat = None
         _rng = random.Random(seed)
         for i in range(len(self.clauses)):

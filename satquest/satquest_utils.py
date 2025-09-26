@@ -2,10 +2,10 @@ import hashlib
 import inspect
 import re
 
-from pysat.formula import WCNF
+from pysat.formula import WCNF, CNF # type: ignore
 
 
-def cnf2wcnf(cnf):
+def cnf2wcnf(cnf: CNF) -> WCNF:
     wcnf = WCNF()
     wcnf.nv = cnf.nv
     for clause in cnf.clauses:
@@ -13,7 +13,7 @@ def cnf2wcnf(cnf):
     return wcnf
 
 
-def get_class_source_hash(cls):
+def get_class_source_hash(cls: type) -> str:
     try:
         source = inspect.getsource(cls)
         source_hash = hashlib.md5(source.encode("utf-8")).hexdigest()[:8]
@@ -23,7 +23,7 @@ def get_class_source_hash(cls):
     return source_hash
 
 
-def re_matcher(content_output: str, pattern: str) -> str:
+def re_matcher(content_output: str, pattern: str) -> str | None:
     final_answer = None
     try:
         match = re.finditer(pattern, content_output, re.DOTALL)

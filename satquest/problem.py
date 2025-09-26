@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import Any, Generator
 
-from pysat.examples.lbx import LBX as MCSSolver
-from pysat.examples.musx import MUSX as MUSSolver
-from pysat.examples.rc2 import RC2 as MaxSATSolver
-from pysat.solvers import Solver
+from pysat.examples.lbx import LBX as MCSSolver # type: ignore
+from pysat.examples.musx import MUSX as MUSSolver # type: ignore
+from pysat.examples.rc2 import RC2 as MaxSATSolver # type: ignore
+from pysat.solvers import Solver # type: ignore
+from pysat.examples.lsu import LSU # type: ignore
+from pysat.examples.hitman import Hitman # type: ignore
 
 from satquest.cnf import CNF
 from satquest.constants import GIT_HASH, SAT_SOLVER_NAME
@@ -15,14 +17,16 @@ from satquest.satquest_utils import cnf2wcnf, get_class_source_hash
 class Problem(ABC):
     def __init__(self, cnf: CNF):
         self.cnf = cnf
+        self._solution = None
+        self._solver_metadata = None
 
     @property
     @abstractmethod
-    def solution(self) -> Any:
+    def solution(self) -> Any | None:
         pass
 
     @abstractmethod
-    def solution_enumerate(self) -> Generator[str, None, None]:
+    def solution_enumerate(self) -> Generator[str | None, None, None]:
         pass
 
     @property
@@ -48,20 +52,20 @@ class Problem(ABC):
         pass
 
     @property
-    def solver_metadata(self):
-        if not hasattr(self, "_solver_metadata"):
+    def solver_metadata(self) -> dict | None:
+        if self._solver_metadata is None:
             _ = self.solution
         return self._solver_metadata
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}_{GIT_HASH}_{get_class_source_hash(self.__class__)}"
 
 
 class SATDP(Problem):
     @property
-    def solution(self) -> bool:
-        if not hasattr(self, "_solution"):
-            self._solution, self._solver_metadata = "-1", None
+    def solution(self) -> str | None:
+        if self._solution is None:
+            self._solution, self._solver_metadata = None, None
             try:
                 with Solver(name=SAT_SOLVER_NAME, bootstrap_with=self.cnf.clauses) as solver:
                     self._solution = str(int(solver.solve()))
@@ -70,7 +74,7 @@ class SATDP(Problem):
                 pass
         return self._solution
 
-    def solution_enumerate(self) -> Generator[str, None, None]:
+    def solution_enumerate(self) -> Generator[str | None, None, None]:
         yield self.solution
 
     @property
@@ -98,9 +102,9 @@ class SATDP(Problem):
 
 class SATSP(Problem):
     @property
-    def solution(self) -> str:
+    def solution(self) -> str | None:
         assert self.cnf.is_sat
-        if not hasattr(self, "_solution"):
+        if self._solution is None:
             self._solution, self._solver_metadata = None, None
             try:
                 with Solver(name=SAT_SOLVER_NAME, bootstrap_with=self.cnf.clauses) as solver:
@@ -145,9 +149,9 @@ class SATSP(Problem):
 
 class MaxSAT(Problem):
     @property
-    def solution(self) -> str:
+    def solution(self) -> str | None:
         assert not self.cnf.is_sat
-        if not hasattr(self, "_solution"):
+        if self._solution is None:
             self._solution, self._solver_metadata = None, None
             try:
                 with MaxSATSolver(cnf2wcnf(self.cnf.cnf), solver=SAT_SOLVER_NAME, verbose=0) as solver:
@@ -160,9 +164,8 @@ class MaxSAT(Problem):
 
     def solution_enumerate(self) -> Generator[str, None, None]:
         assert not self.cnf.is_sat
-        from pysat.examples.rc2 import RC2
 
-        with RC2(cnf2wcnf(self.cnf.cnf), solver=SAT_SOLVER_NAME, verbose=0) as solver:
+        with MaxSATSolver(cnf2wcnf(self.cnf.cnf), solver=SAT_SOLVER_NAME, verbose=0) as solver:
             pre_cost = None
             for s in solver.enumerate():
                 if pre_cost is None:
@@ -179,9 +182,7 @@ class MaxSAT(Problem):
         assert not self.cnf.is_sat
         try:
             assert self.format_check(answer)
-            from pysat.examples.lsu import LSU as MaxSATSolver
-
-            with MaxSATSolver(cnf2wcnf(self.cnf.cnf), solver=SAT_SOLVER_NAME, verbose=0) as solver:
+            with LSU(cnf2wcnf(self.cnf.cnf), solver=SAT_SOLVER_NAME, verbose=0) as solver:
                 solver.solve()
                 answer_cost = solver._get_model_cost(
                     cnf2wcnf(self.cnf.cnf), [(i + 1) if ai == "1" else -(i + 1) for i, ai in enumerate(answer)]
@@ -204,9 +205,9 @@ class MaxSAT(Problem):
 
 class MCS(Problem):
     @property
-    def solution(self) -> str:
+    def solution(self) -> str | None:
         assert not self.cnf.is_sat
-        if not hasattr(self, "_solution"):
+        if self._solution is None:
             with MCSSolver(cnf2wcnf(self.cnf.cnf), use_cld=False, solver_name=SAT_SOLVER_NAME) as solver:
                 _solution_model = solver.compute()
                 self._solution = "".join(["1" if i in _solution_model else "0" for i in range(1, self.cnf.mc + 1)])
@@ -256,9 +257,9 @@ class MCS(Problem):
 
 class MUS(Problem):
     @property
-    def solution(self) -> str:
+    def solution(self) -> str | None:
         assert not self.cnf.is_sat
-        if not hasattr(self, "_solution"):
+        if self._solution is None:
             with MUSSolver(self.cnf.cnf, solver=SAT_SOLVER_NAME, verbosity=0) as solver:
                 _solution_model = solver.compute()
                 self._solution = "".join(["1" if i in _solution_model else "0" for i in range(1, self.cnf.mc + 1)])
@@ -267,7 +268,6 @@ class MUS(Problem):
 
     def solution_enumerate(self) -> Generator[str, None, None]:
         assert not self.cnf.is_sat
-        from pysat.examples.hitman import Hitman
 
         with Hitman(solver="m22") as hitman_solver:
             with MCSSolver(cnf2wcnf(self.cnf.cnf), use_cld=False, solver_name=SAT_SOLVER_NAME) as solver:
@@ -323,4 +323,4 @@ def create_problem(problem_type: str, cnf: CNF) -> Problem:
             return MCS(cnf)
         case "mus":
             return MUS(cnf)
-    return None
+    raise ValueError(f"Invalid problem type: {problem_type}")
