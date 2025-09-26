@@ -1,5 +1,7 @@
 import re
 
+import pytest
+
 from satquest.cnf import CNF
 from satquest.constants import CHEF_NAME, COOKIE_NAMES
 from satquest.question import (
@@ -60,4 +62,5 @@ def test_question_repr_and_factory_helper():
     assert isinstance(create_question("math"), QuestionMath)
     assert isinstance(create_question("story"), QuestionStory)
     assert isinstance(create_question("dualstory"), QuestionDualStory)
-    assert create_question("unknown") is None
+    with pytest.raises(ValueError):
+        create_question("unknown")

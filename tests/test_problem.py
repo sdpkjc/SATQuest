@@ -13,7 +13,6 @@ from satquest.problem import MCS, MUS, SATDP, SATSP, MaxSAT, create_problem
         ("maxsat", MaxSAT),
         ("mcs", MCS),
         ("mus", MUS),
-        ("unknown", type(None)),
     ],
 )
 def test_create_problem_dispatches_to_expected_type(kind, expected):
@@ -24,6 +23,11 @@ def test_create_problem_dispatches_to_expected_type(kind, expected):
         assert problem is None
     else:
         assert isinstance(problem, expected)
+
+
+def test_create_problem_raises_value_error_for_unknown_problem_type():
+    with pytest.raises(ValueError):
+        create_problem("unknown", CNF(clauses=[[1]]))
 
 
 def test_satdp_solution_and_check_cover_sat_and_unsat():

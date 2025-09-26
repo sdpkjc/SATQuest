@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from satquest.cnf import CNF
 from satquest.constants import CHARACTERS, CHEF_NAME, COOKIE_NAMES, GIT_HASH
@@ -6,27 +6,32 @@ from satquest.satquest_utils import get_class_source_hash
 
 
 class Question(ABC):
+    @abstractmethod
     def visit_satdp(self, cnf: CNF) -> str:
         # SAT Decision Problem
         pass
 
+    @abstractmethod
     def visit_satsp(self, cnf: CNF) -> str:
         # SAT Solve Problem
         pass
 
+    @abstractmethod
     def visit_maxsat(self, cnf: CNF) -> str:
         # MaxSAT
         pass
 
+    @abstractmethod
     def visit_mcs(self, cnf: CNF) -> str:
         # Minimal Correction Subset (MCS)
         pass
 
+    @abstractmethod
     def visit_mus(self, cnf: CNF) -> str:
         # Minimal Unsatisfiable Subset (MUS)
         pass
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}_{GIT_HASH}_{get_class_source_hash(self.__class__)}"
 
 
@@ -76,7 +81,7 @@ Given a CNF formula with {cnf.nv} variables and {cnf.mc} clauses in DIMACS forma
 
 
 class QuestionMath(QuestionDIMACS):
-    def _clauses2mathformula(self, clauses):
+    def _clauses2mathformula(self, clauses: list) -> str:
         return " \\land ".join(
             "("
             + " \\lor ".join(
@@ -201,4 +206,4 @@ def create_question(question_type: str) -> Question:
             return QuestionStory()
         case "dualstory":
             return QuestionDualStory()
-    return None
+    raise ValueError(f"Invalid question type: {question_type}")
