@@ -4,6 +4,16 @@ on:
   push:
     branches: ["**"]  
     tags: ["*"]
+    paths-ignore:
+      - '**/README.md'
+      - 'docs/**'
+      - 'tests/**'
+      - 'CITATION.cff'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.python-version'
+      - '*.py'
+      - '*.yaml'
 
 permissions:
   contents: read
