@@ -1,4 +1,4 @@
-# SATQuest 🚀
+# SATQuest 🏞
 
 <div align="center">
 
@@ -18,13 +18,11 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![python versions](https://img.shields.io/pypi/pyversions/satquest)](https://pypi.org/project/satquest)
 
-SATQuest packages CNF-derived logical reasoning tasks, a verifier, and reinforcement fine-tuning (RFT) rewards so you can probe and improve LLM reasoning with controllable difficulty.
-
 ## 🧰 What's Inside
 
-- CNF problems spanning three orthogonal dimensions: instance scale, problem type, and question format.
+- CNF-based problems spanning three orthogonal dimensions: instance scale, problem type, and question format.
 - A PySAT-backed verifier that scores binary answers and exposes solver metadata for reproducible diagnostics.
-- Ready-to-use datasets on Hugging Face, evaluation scripts, and GRPO-style RFT recipes.
+- Ready-to-use datasets on Hugging Face, evaluation scripts, and RFT scripts.
 
 ## ⚡ Quickstart
 
