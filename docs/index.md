@@ -15,7 +15,9 @@
 [![pytest](https://github.com/sdpkjc/SATQuest/actions/workflows/pytest.yml/badge.svg)](https://github.com/sdpkjc/SATQuest/actions/workflows/pytest.yml)
 [![pre-commit](https://github.com/sdpkjc/SATQuest/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/sdpkjc/SATQuest/actions/workflows/pre-commit.yml)
 [![docs](https://img.shields.io/github/deployments/sdpkjc/SATQuest/Production?label=docs&logo=vercel)](https://SATQuest.sdpkjc.com/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Type Checked: Pyright](https://img.shields.io/badge/Type%20Checked-Pyright-blue)](https://github.com/microsoft/pyright)
 [![python versions](https://img.shields.io/pypi/pyversions/satquest)](https://pypi.org/project/satquest)
 
 ## 🧰 What's Inside
