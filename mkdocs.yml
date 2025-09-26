@@ -87,8 +87,8 @@ markdown_extensions:
   - pymdownx.mark
   - pymdownx.tilde
   # - pymdownx.emoji:
-      # emoji_index: !!python/name:materialx.emoji.twemoji
-      # emoji_generator: !!python/name:materialx.emoji.to_svg
-      # options:
-      #   custom_icons:
-      #     - docs/overrides/.icons
+  #     emoji_index: !!python/name:materialx.emoji.twemoji
+  #     emoji_generator: !!python/name:materialx.emoji.to_svg
+  #     options:
+  #       custom_icons:
+  #         - docs/overrides/.icons
