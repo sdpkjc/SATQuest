@@ -2,8 +2,28 @@ name: pytest
 
 on:
   pull_request:
+    paths-ignore:
+      - '**/README.md'
+      - 'docs/**'
+      - 'tests/**'
+      - 'CITATION.cff'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.python-version'
+      - '*.py'
+      - '*.yaml'
   push:
     branches: [main]
+    paths-ignore:
+      - '**/README.md'
+      - 'docs/**'
+      - 'tests/**'
+      - 'CITATION.cff'
+      - 'LICENSE'
+      - '.gitignore'
+      - '.python-version'
+      - '*.py'
+      - '*.yaml'
 
 concurrency:
   group: pytest-${{ github.ref }}
