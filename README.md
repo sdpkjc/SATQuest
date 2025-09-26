@@ -20,7 +20,15 @@
 
 </div>
 
-## 🚀 Quickstart
+
+## 🧰 What's Inside
+
+- CNF-based problems spanning three orthogonal dimensions: instance scale, problem type, and question format.
+- A PySAT-backed verifier that scores binary answers and exposes solver metadata for reproducible diagnostics.
+- Ready-to-use datasets on Hugging Face, evaluation scripts, and RFT scripts.
+
+
+## ⚡ Quickstart
 
 ```python
 # Install dependencies
