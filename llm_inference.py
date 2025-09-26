@@ -1,12 +1,10 @@
-from dotenv import load_dotenv
-
-load_dotenv()
-
 import time
 
+from dotenv import load_dotenv
 from openai import OpenAI
 from tenacity import retry, stop_after_attempt, wait_random
 
+load_dotenv()
 MAX_DURATION = 900
 
 client = OpenAI()
