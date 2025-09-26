@@ -6,14 +6,16 @@
 
 <br>
 
+[![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
 [![License](https://img.shields.io/pypi/l/satquest)](https://github.com/sdpkjc/satquest)
 [![arXiv](https://img.shields.io/badge/arXiv-2509.00930-b31b1b.svg)](https://arxiv.org/abs/2509.00930)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-sdpkjc/SATQuest-181717?logo=github)](https://github.com/sdpkjc/SATQuest)
-[![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
+[![HF Datasets](https://img.shields.io/badge/HF-datasets-orange?logo=huggingface)](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53)
 
+[![pytest](https://github.com/sdpkjc/SATQuest/actions/workflows/pytest.yml/badge.svg)](https://github.com/sdpkjc/SATQuest/actions/workflows/pytest.yml)
+[![pre-commit](https://github.com/sdpkjc/SATQuest/actions/workflows/pre-commit.yml/badge.svg)](https://github.com/sdpkjc/SATQuest/actions/workflows/pre-commit.yml)
 [![docs](https://img.shields.io/github/deployments/sdpkjc/SATQuest/Production?label=docs&logo=vercel)](https://SATQuest.sdpkjc.com/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![python versions](https://img.shields.io/pypi/pyversions/satquest)](https://pypi.org/project/satquest)
 
 </div>
