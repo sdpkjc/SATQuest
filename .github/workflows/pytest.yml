@@ -17,13 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up uv
-        uses: astral-sh/setup-uv@v1
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
         with:
-          python-version: "3.10"
-
-      - name: Sync dependencies
-        run: uv sync --dev
+          version: "latest"
+          python-version: "3.13"
 
       - name: Run pytest
-        run: uv run --dev -m pytest
+        run: uv run --dev pytest
