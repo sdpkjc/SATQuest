@@ -62,7 +62,7 @@ plugins:
 
 nav:
   - Overview: index.md
-  - Leadboard: leaderboard.md
+  - Leaderboard: leaderboard.md
   - Examples: examples.md
   - Datasets: datasets.md
   - Evaluate: evaluate.md
