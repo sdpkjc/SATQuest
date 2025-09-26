@@ -1,110 +1,55 @@
-# **SATQuest**: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs
+# SATQuest
 
 ![satquest](./media/satquest.png)
 
-## 🚀 Quickstart
+SATQuest packages CNF-derived logical reasoning tasks, a verifier, and reinforcement fine-tuning (RFT) rewards so you can probe and improve LLM reasoning with controllable difficulty.
+
+## What's Inside
+
+- CNF problems spanning three orthogonal dimensions: instance scale, problem type, and question format (as highlighted in the paper).
+- A PySAT-backed verifier that scores binary answers and exposes solver metadata for reproducible diagnostics.
+- Ready-to-use datasets on Hugging Face, evaluation scripts, and GRPO-style RFT recipes.
+
+## Quickstart
+
+```bash
+uv sync
+```
 
 ```python
-# Install dependencies
-# pip install datasets satquest
-
 from datasets import load_dataset
 from satquest import CNF, create_problem, create_question
 
-item = load_dataset('sdpkjc/SATQuest', split='test')[0]
-cnf = CNF(dimacs=item['sat_dimacs'])
-# cnf.shuffle()
+item = load_dataset("sdpkjc/SATQuest", split="test")[0]
+cnf = CNF(dimacs=item["sat_dimacs"])
 
-problem = create_problem('SATSP', cnf) # or 'SATDP', 'MaxSAT', 'MCS', 'MUS'
-question = create_question('math')  # or 'dimacs', 'story', 'dualstory'
+problem = create_problem("SATSP", cnf)
+question = create_question("math")
 prompt = problem.accept(question)
-'''
-Given a CNF formula with 3 variables and 12 clauses in mathematical notation:
-
-(x_1 \lor x_2 \lor x_3) \land (x_3 \lor \neg x_1 \lor x_2) \land (x_1 \lor x_3 \lor \neg x_2) \land (x_1 \lor \neg x_2) \land (x_3 \lor x_1 \lor \neg x_2) \land (x_3 \lor \neg x_1 \lor x_2) \land (\neg x_3 \lor \neg x_1) \land (\neg x_1 \lor x_2 \lor x_3) \land (\neg x_2 \lor \neg x_3) \land (\neg x_2 \lor x_3 \lor x_1) \land (x_1 \lor \neg x_3) \land (\neg x_3 \lor \neg x_2 \lor \neg x_1)
-
-Find a satisfying assignment for the formula.
-Output a binary string of length 3 ('1' for true, '0' for false).
-'''
-answer = problem.solution  # reference answer
-# 110
-reward = int(problem.check(answer))  # 1 if answer is correct, 0 otherwise
-# 1
+print(prompt)
+print(problem.check(problem.solution))
 ```
 
-## 🏭 Dataset Generation
+## Explore the Workflow
 
-[![Dataset on HF](https://huggingface.co/datasets/huggingface/badges/resolve/main/dataset-on-hf-sm.svg)]([https://huggingface.co/sdpkjc/](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53))
+- [Datasets](datasets.md): CNF schema, regeneration flags, and Hugging Face links.
+- [Evaluate](evaluate.md): batch LLM scoring with Weave -> W&B logging.
+- [Finetuning](finetuning.md): GRPO setup using the verifier-driven reward functions.
+- [Examples](examples.md): prompts and API snippets for every problem/question pairing.
 
-```bash
-# Run dataset generation
-uv run --group gen gen_cnf_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
+## Highlights from the Paper
 
-uv run --group gen gen_cnf_rft_dataset.py --hf-entity {YOUR_HF_ENTITY} --seed 9527
-```
+- Reasoning-tuned models lead the leaderboard: `o3-mini` (0.56), `DeepSeek-R1` (0.42), `QwQ-32B` (0.40), and `DeepSeek-R1-Distill-Qwen-32B` (0.39) outperform vanilla LLMs such as `GPT-4.1` (0.38) and `DeepSeek-V3-0324` (0.36), while `Qwen2.5-7B-Instruct` stays below 0.10 accuracy.
+- Accuracy drops as solver effort grows; hallucinated "reasoning shortcuts" appear on hard MCS/MUS instances, underscoring the need for verifier feedback.
+- Question presentation matters: math prompts are easiest, whereas story/dualstory formats expose sizable regressions for open-weight models. RFT experiments show verifier rewards extend reasoning traces and transfer to harder instances, but cross-format generalisation remains challenging.
 
-## 📊 Evaluation
-
-```bash
-# Run evaluation
-uv run --group eval eval_model.py \
-    --exp-name {YOUR_EXP_NAME} \
-    --wandb-project "SATQuest-Eval" \
-    --hf-dataset-name "sdpkjc/SATQuest" \
-    --p-type-list SATSP \
-    --q-type-list math \
-    --llm-model "gpt-4o" \
-    --max-tokens 16384 \
-    --temperature 0.6 \
-    --num-example 10 \
-    --stream True \
-    --cnf-shuffle False \
-    --n-repeat 1
-```
-
-### Evaluation Parameters
-
-- `exp-name`: Name of your experiment
-- `wandb-project`: Weights & Biases project name
-- `hf-dataset-name`: HuggingFace dataset name
-- `p-type-list`: Problem types to evaluate (e.g., "SATSP", "MaxSAT", "MCS", "MUS", "SATDP_SAT", "SATDP_UNSAT")
-- `q-type-list`: Question types to evaluate (e.g., "math", "dimacs", "story", "dualstory")
-- `llm-model`: LLM model to use for evaluation
-- `max-tokens`: Maximum tokens for LLM response
-- `temperature`: Temperature for LLM generation
-- `num-example`: Number of examples to evaluate
-- `stream`: Whether to stream LLM responses
-- `cnf-shuffle`: Whether to shuffle CNF formulas
-- `n-repeat`: Number of times to repeat evaluation
-
-The evaluation results will be logged to Weights & Biases.
-
-## 🏄 Reinforcement Fine-Tuning (RFT)
-
-```bash
-# Run RFT training
-CUDA_VISIBLE_DEVICES=0,1,2,3 nohup uv run --group rft trl vllm-serve --model "Qwen/Qwen2.5-7B-Instruct" --tensor_parallel_size 4 --max_model_len 16384  --gpu_memory_utilization 0.9 --enable_prefix_caching True &
-CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processes 4 --config-file zero3.yaml rft.py --model-id "Qwen/Qwen2.5-7B-Instruct" --p-list SATSP --q-list math --exp-name "test" --server-ip "0.0.0.0"
-```
-
-### RFT Parameters
-
-- `model-id`: Base model to fine-tune (default: "Qwen/Qwen2.5-7B-Instruct")
-- `p-list`: Problem types for training (e.g., "SATSP", "MaxSAT", "MCS", "MUS", "SATDP_SAT", "SATDP_UNSAT")
-- `q-list`: Question formats for training (e.g., "math", "story")
-- `exp-name`: Name of your experiment
-- `server-ip`: IP address for VLLM server
-
-
-## 🔖 Citing SATQuest
+## Citing SATQuest
 
 ```bibtex
 @misc{satquest2025,
-  author = {Yanxiao Zhao, Yaqian Li, Zihao Bo, Rinyoichi Takezoe, Haojia Hui, Mo Guang, Lei Ren, Xiaolin Qin, Kaiwen Long},
+  author = {Yanxiao Zhao and Yaqian Li and Zihao Bo and Rinyoichi Takezoe and Haojia Hui and Mo Guang and Lei Ren and Xiaolin Qin and Kaiwen Long},
   title = {SATQuest: A Verifier for Logical Reasoning Evaluation and Reinforcement Fine-Tuning of LLMs},
   year = {2025},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  howpublished = {\url{https://github.com/sdpkjc/SATQuest}},
+  howpublished = {\url{https://github.com/sdpkjc/SATQuest}}
 }
 ```
