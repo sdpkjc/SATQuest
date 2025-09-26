@@ -99,7 +99,7 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch --num-processe
 ```
 
 
-## 🔖 Citing SATQuest
+## 📝 Citing SATQuest
 
 ```bibtex
 @misc{zhao2025satquestverifierlogicalreasoning,

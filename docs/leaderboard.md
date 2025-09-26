@@ -1,8 +1,8 @@
-# Leaderboard
+# 🏆 Leaderboard
 
 SATQuest tracks LLM reasoning across 140 paired CNFs (5 problem types x 4 prompt formats) using the verifier described in the paper. Use this page to compare against published numbers and append new runs.
 
-## Benchmark Results
+## 📊 Benchmark Results
 
 | Model | Family | Overall accuracy | Notes | Source |
 | --- | --- | --- | --- | --- |
@@ -18,19 +18,19 @@ SATQuest tracks LLM reasoning across 140 paired CNFs (5 problem types x 4 prompt
 
 _All numbers average across all problem types and prompt formats on `sdpkjc/SATQuest`._
 
-## How to Submit Results
+## 📝 How to Submit Results
 
 1. **Run the evaluator** - `uv run --group eval eval_model.py` with your model settings (see [Evaluate](evaluate.md)).
 2. **Log to W&B** - we use the `SATQuest-Eval` project; keep `--cnf-shuffle` and dataset revisions explicit for reproducibility.
 3. **Open a PR** - add a row to the table above (including accuracy, configuration, and a link to the run) or link to an external report. Qualitative examples or failure cases are welcome.
 
-## Comparability Checklist
+## 📝 Comparability Checklist
 
 - Keep problem/question lists and `--cnf-shuffle` consistent across comparisons.
 - Report the number of evaluated CNFs and repeats; include mean +/- stdev when sweeping sampling hyperparameters.
 - Document any edits to prompt templates, regex extraction, or solver parameters.
 - Mention environment details (solver version, SATQuest commit, dataset revision) so others can replicate your setup.
 
-## Looking Ahead
+## 🔮 Looking Ahead
 
 Upcoming iterations will surface charts (accuracy vs. solver decisions, format heatmaps) directly in the docs. Until then, the markdown table keeps contributions lightweight, feel free to file issues with automation ideas if you want to help streamline reporting.

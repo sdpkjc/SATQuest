@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <style>
+    :root{
+      --bg: none;
+      --frame: #9BA8B8;
+      --axis: #0B0F19;
+      --accent: #4F86F7;
+      --stroke: 10;
+      --outline: 14;
+
+      --cV: #34D399;
+      --cH: #FBBF24;
+      --cD: #FB7185;
+    }
+    .cap { stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <rect x="10" y="10" width="180" height="180" rx="28" fill="var(--bg)"/>
+
+  <g class="cap">
+    <path d="M40 25 H160 a15 15 0 0 1 15 15 V160 a15 15 0 0 1 -15 15 H40 a15 15 0 0 1 -15 -15 V40 a15 15 0 0 1 15 -15 Z"
+          stroke="#FFFFFF" stroke-width="var(--outline)"/>
+    <path d="M40 25 H160 a15 15 0 0 1 15 15 V160 a15 15 0 0 1 -15 15 H40 a15 15 0 0 1 -15 -15 V40 a15 15 0 0 1 15 -15 Z"
+          stroke="var(--frame)" stroke-width="var(--stroke)"/>
+  </g>
+
+  <g class="cap">
+    <line x1="100" y1="45"  x2="100" y2="155" stroke="#FFFFFF" stroke-width="var(--outline)"/>
+    <line x1="45"  y1="100" x2="155" y2="100" stroke="#FFFFFF" stroke-width="var(--outline)"/>
+    <line x1="60"  y1="140" x2="140" y2="60"  stroke="#FFFFFF" stroke-width="var(--outline)"/>
+  </g>
+  <g class="cap">
+    <line x1="100" y1="45"  x2="100" y2="155" stroke="var(--axis)" stroke-width="var(--stroke)"/>
+    <line x1="45"  y1="100" x2="155" y2="100" stroke="var(--axis)" stroke-width="var(--stroke)"/>
+    <line x1="60"  y1="140" x2="140" y2="60"  stroke="var(--axis)" stroke-width="var(--stroke)"/>
+  </g>
+
+  <circle cx="100" cy="45"  r="4.5" fill="var(--cV)"/>
+  <circle cx="155" cy="100" r="4.5" fill="var(--cH)"/>
+  <circle cx="60"  cy="140" r="4.5" fill="var(--cD)"/>
+
+  <g class="cap">
+    <path d="M120 150 l15 15 35 -35" fill="none" stroke="#FFFFFF" stroke-width="var(--outline)"/>
+    <path d="M120 150 l15 15 35 -35" fill="none" stroke="var(--accent)" stroke-width="var(--stroke)"/>
+  </g>
+</svg>

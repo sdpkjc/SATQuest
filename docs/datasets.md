@@ -1,8 +1,10 @@
-# Datasets
+# 📚 Datasets
+
+[![HF Datasets](https://img.shields.io/badge/Hosted%20on-Hugging%20Face-fcc21b?logo=huggingface)](https://huggingface.co/collections/sdpkjc/satquest-6820687d856b96f869921e53)
 
 SATQuest bundles paired SAT/UNSAT CNF instances that can be consumed directly via Hugging Face Datasets or regenerated locally with the provided scripts. Each record contains solver metadata for every supported problem family, making it straightforward to benchmark models across SAT decision, optimisation, and explanation tasks.
 
-## Hosted Collections
+## 📦 Hosted Collections
 
 - `sdpkjc/SATQuest`: evaluation-ready split of 140 paired CNFs. The public `test` split powers examples in the quickstart and evaluation scripts.
 - `sdpkjc/SATQuest-RFT-3k`: 3k training items designed for reinforcement fine-tuning. Instances cover a broader clause-to-variable ratio to encourage curriculum-style training.
@@ -17,7 +19,7 @@ cnf_eval = load_dataset("sdpkjc/SATQuest", split="test")
 cnf_rft = load_dataset("sdpkjc/SATQuest-RFT-3k", split="train")
 ```
 
-## Record Structure
+## 🧱 Record Structure
 
 Every row combines both satisfiable and unsatisfiable versions of the same CNF:
 
@@ -38,7 +40,7 @@ print(cnf_unsat.nv, cnf_unsat.mc)
 print(cnf_unsat.clauses[:2])
 ```
 
-## Reproducing the Dataset
+## 🔄 Reproducing the Dataset
 
 Both generation scripts draw random clauses, enforce deduplication, and attach solver statistics before uploading to Hugging Face. Set your own entity to publish results under your account:
 
@@ -53,7 +55,7 @@ Key implementation details:
 - `post_process_fn` shuffles literals deterministically per seed, so different runs share difficulty profiles without leaking solutions.
 - Solver metadata is recorded for every problem class (`SATSP`, `SATDP_SAT`, `SATDP_UNSAT`, `MaxSAT`, `MCS`, `MUS`) to support diverse reward functions.
 
-## Customising Generation
+## 🎨 Customising Generation
 
 - **Clause density**: tune the ratio `A` inside the scripts (`m = int(n * A)`) to target specific hardness regimes.
 - **Variable range**: adjust the loop bounds for `N` to create larger instances.
