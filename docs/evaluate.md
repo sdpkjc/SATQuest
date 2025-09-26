@@ -1,4 +1,4 @@
-# Evaluate
+# 📈 Evaluate
 
 The evaluation harness wraps SATQuest problems, calls a target LLM, and uses the package verifier to score responses. Results are logged through Weave into your Weights & Biases project so you can compare multiple model runs side by side.
 

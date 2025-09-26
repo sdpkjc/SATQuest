@@ -1,15 +1,15 @@
-# Finetuning
+# 🧠 Finetuning
 
 SATQuest provides a reinforcement learning workflow powered by GRPO that encourages models to produce well-structured reasoning traces (`<think>...</think>`) and exact binary answers (`<answer>...</answer>`). This page explains how to launch the reference setup and how to adapt it to your infrastructure.
 
-## Requirements
+## 📝 Requirements
 
 - 8 GPUs (the reference run uses two groups of four for VLLM serving and GRPO training). Adjust device mappings if you have fewer cards.
 - CUDA-ready environment with the `uv` dependencies from the `rft` group installed (`uv sync --group rft`).
 - Access to the `sdpkjc/SATQuest-RFT-3k` dataset or your own regeneration.
 - A base instruction-tuned model. We test with `Qwen/Qwen2.5-7B-Instruct`, but any chat model with `<think>/<answer>` style outputs works if you update the reward functions.
 
-## Launch the VLLM Server
+## 🚀 Launch the VLLM Server
 
 Start an inference server that the trainer will query for rollout generation:
 
@@ -26,7 +26,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 nohup uv run --group rft trl vllm-serve \
 - `max_model_len` must accommodate the longest prompt + completion you expect (GRPO defaults to 2048+8192 tokens).
 - Run the command inside `nohup` or a process manager so the server remains available when you start training.
 
-## Run the GRPO Trainer
+## 🧠 Run the GRPO Trainer
 
 In a separate shell, launch the trainer against the server:
 
@@ -48,7 +48,7 @@ CUDA_VISIBLE_DEVICES=4,5,6,7 uv run --group rft accelerate launch \
 
 Modify `zero3.yaml` if you need a different parallelism strategy.
 
-## Reward Functions
+## 💰 Reward Functions
 
 Three reward components are applied to each completion:
 
@@ -58,16 +58,16 @@ Three reward components are applied to each completion:
 
 Adjust the weights or implement new reward callables if you want to include latency penalties, reasoning-length bonuses, or other task-specific signals.
 
-## Customising the Training Dataset
+## 🎨 Customising the Training Dataset
 
 - Use `--p-list` / `--q-list` to control which problem classes appear in the rollout queue. Mixing `SATSP` with `SATDP_UNSAT`, for example, teaches the model to output both satisfying assignments and UNSAT certificates.
 - Regenerate data with `gen_cnf_rft_dataset.py` to explore other clause densities. The trainer only reads `cnf_dimacs`, `prompt`, and `p_type`, so you can augment records with extra metadata without code changes.
 
-## Monitoring and Checkpoints
+## 📺 Monitoring and Checkpoints
 
 Training logs are written to the directory named after `exp_name`. Because `save_only_model=True`, checkpoints contain only the model weights—use the same tokenizer when you resume. Keep an eye on rollout rewards to catch API failures from the VLLM server; flat reward curves usually indicate parsing errors or truncated completions, so consider lowering `max_completion_length` or increasing server timeout.
 
-## Next Steps
+## 🔜 Next Steps
 
 - Plug the finetuned model into the [evaluation](evaluate.md) script for a side-by-side comparison with the base model.
 - Extend `make_process_fn` in `rft.py` if you want to insert chain-of-thought exemplars or additional instructions before reinforcement learning.

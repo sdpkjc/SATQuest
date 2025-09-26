@@ -1,5 +1,5 @@
 site_name: SATQuest
-site_url: https://satquest.sdpkjc.me
+site_url: https://satquest.sdpkjc.com
 theme:
   name: material
   palette:
@@ -21,10 +21,10 @@ theme:
     - content.code.annotate
     - header.autohide
   custom_dir: docs/overrides
-  # favicon: imgs/logo.svg
+  favicon: media/logo.svg
   icon:
       repo: fontawesome/brands/github
-      # logo: logo
+      logo: logo
 edit_uri: edit/main/docs/
 
 extra:
@@ -33,7 +33,7 @@ extra:
     property: !ENV GOOGLE_ANALYTICS_KEY
   social:
     - icon: fontawesome/solid/house-chimney
-      link: https://satquest.sdpkjc.me
+      link: https://satquest.sdpkjc.com
       name: SATQuest homepage
     - icon: fontawesome/solid/envelope
       link: mailto:hi@sdpkjc.com
@@ -44,9 +44,6 @@ extra:
     - icon: simple/python
       link: https://pypi.org/project/satquest
       name: pypi
-    # - icon: simple/weightsandbiases
-    #   link: https://report.abcdrl.xyz/
-    #   name: wandb reports
 
 repo_name: sdpkjc/SATQuest
 repo_url: https://github.com/sdpkjc/satquest
@@ -61,12 +58,12 @@ plugins:
       fallback_to_build_date: true
 
 nav:
-  - Overview: index.md
-  - Leaderboard: leaderboard.md
-  - Examples: examples.md
-  - Datasets: datasets.md
-  - Evaluate: evaluate.md
-  - Finetuning: finetuning.md
+  - 📖 Overview: index.md
+  - 🏆 Leaderboard: leaderboard.md
+  - 📝 Examples: examples.md
+  - 📚 Datasets: datasets.md
+  - 📊 Evaluate: evaluate.md
+  - 🧠 Finetuning: finetuning.md
 
 
 markdown_extensions:
