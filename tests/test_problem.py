@@ -1,7 +1,9 @@
 import pytest
 
 from satquest.cnf import CNF
+from satquest.constants import SAT_SOLVER_NAME
 from satquest.problem import MCS, MUS, SATDP, SATSP, MaxSAT, create_problem
+from satquest.question import Question
 
 
 @pytest.mark.parametrize(
@@ -82,3 +84,92 @@ def test_maxsat_mcs_mus_share_expected_behaviour_on_unsat_instance():
 
     for problem in (maxsat, mcs, mus):
         assert problem.solver_metadata["solvers"][0]
+
+
+def test_accept_delegates_to_question_visitor():
+    class RecordingQuestion(Question):
+        def __init__(self) -> None:
+            self.calls: list[tuple[str, CNF]] = []
+
+        def _record(self, name: str, cnf: CNF) -> str:
+            self.calls.append((name, cnf))
+            return f"{name}-response"
+
+        def visit_satdp(self, cnf: CNF) -> str:
+            return self._record("satdp", cnf)
+
+        def visit_satsp(self, cnf: CNF) -> str:
+            return self._record("satsp", cnf)
+
+        def visit_maxsat(self, cnf: CNF) -> str:
+            return self._record("maxsat", cnf)
+
+        def visit_mcs(self, cnf: CNF) -> str:
+            return self._record("mcs", cnf)
+
+        def visit_mus(self, cnf: CNF) -> str:
+            return self._record("mus", cnf)
+
+    question = RecordingQuestion()
+    factories = [
+        (lambda: SATDP(CNF(clauses=[[1]])), "satdp"),
+        (lambda: SATSP(CNF(clauses=[[1]])), "satsp"),
+        (lambda: MaxSAT(CNF(clauses=[[1], [-1]])), "maxsat"),
+        (lambda: MCS(CNF(clauses=[[1], [-1]])), "mcs"),
+        (lambda: MUS(CNF(clauses=[[1], [-1]])), "mus"),
+    ]
+
+    for factory, expected in factories:
+        question.calls.clear()
+        problem = factory()
+        response = problem.accept(question)
+        assert response == f"{expected}-response"
+        assert question.calls == [(expected, problem.cnf)]
+
+
+@pytest.mark.parametrize(
+    "problem_factory, expected_length",
+    [
+        (lambda: SATDP(CNF(clauses=[[1]])), 1),
+        (lambda: SATSP(CNF(clauses=[[1, -2], [2]])), 2),
+        (lambda: MaxSAT(CNF(clauses=[[1], [-1]])), 1),
+        (lambda: MCS(CNF(clauses=[[1], [-1]])), 2),
+        (lambda: MUS(CNF(clauses=[[1], [-1]])), 2),
+    ],
+)
+def test_answer_pattern_matches_problem_dimensions(problem_factory, expected_length):
+    problem = problem_factory()
+    assert problem.ANSWER_PATTERN == f"(?=([01]{{{expected_length}}}))"
+
+
+@pytest.mark.parametrize(
+    "problem_factory, invalid_values",
+    [
+        (lambda: SATDP(CNF(clauses=[[1]])), ["", "2", "01", 1, None]),
+        (lambda: SATSP(CNF(clauses=[[1]])), ["", "2", "01", 1, None]),
+        (lambda: MaxSAT(CNF(clauses=[[1], [-1]])), ["", "2", "01", 1, None]),
+        (lambda: MCS(CNF(clauses=[[1], [-1]])), ["", "2", "1", "000", 1, None]),
+        (lambda: MUS(CNF(clauses=[[1], [-1]])), ["", "2", "1", "000", 1, None]),
+    ],
+)
+def test_format_check_rejects_invalid_values(problem_factory, invalid_values):
+    problem = problem_factory()
+    for value in invalid_values:
+        assert problem.format_check(value) is False
+
+
+@pytest.mark.parametrize(
+    "problem_factory, expected",
+    [
+        (lambda: SATDP(CNF(clauses=[[1]])), (SAT_SOLVER_NAME,)),
+        (lambda: SATSP(CNF(clauses=[[1]])), (SAT_SOLVER_NAME,)),
+        (lambda: MaxSAT(CNF(clauses=[[1], [-1]])), (SAT_SOLVER_NAME, "RC2")),
+        (lambda: MCS(CNF(clauses=[[1], [-1]])), (SAT_SOLVER_NAME, "LBX")),
+        (lambda: MUS(CNF(clauses=[[1], [-1]])), (SAT_SOLVER_NAME, "MUSX")),
+    ],
+)
+def test_solver_metadata_reports_solver_names(problem_factory, expected):
+    problem = problem_factory()
+    _ = problem.solution
+    assert problem.solver_metadata is not None
+    assert problem.solver_metadata["solvers"] == expected
