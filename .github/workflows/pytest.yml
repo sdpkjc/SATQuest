@@ -1,0 +1,27 @@
+name: pytest
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: pytest-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+          python-version: "3.13"
+
+      - name: Run pytest
+        run: uv run --dev pytest

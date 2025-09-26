@@ -43,6 +43,7 @@ dev = [
     "mkdocs-glightbox>=0.4.0",
     "mkdocs-material>=9.6.18",
     "pre-commit>=4.3.0",
+    "pytest>=8.4.2",
 ]
 eval = [
     "datasets>=4.0.0",

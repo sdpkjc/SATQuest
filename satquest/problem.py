@@ -89,7 +89,7 @@ class SATDP(Problem):
         return isinstance(answer, str) and len(answer) == 1 and set(answer).issubset({"0", "1"})
 
     def accept(self, question: Question, *args, **kwargs) -> str:
-        return question.visit_satdp(self, *args, **kwargs)
+        return question.visit_satdp(self.cnf, *args, **kwargs)
 
     @property
     def ANSWER_PATTERN(self) -> str:
@@ -136,7 +136,7 @@ class SATSP(Problem):
         return isinstance(answer, str) and len(answer) == self.cnf.nv and set(answer).issubset({"0", "1"})
 
     def accept(self, question: Question, *args, **kwargs) -> str:
-        return question.visit_satsp(self, *args, **kwargs)
+        return question.visit_satsp(self.cnf, *args, **kwargs)
 
     @property
     def ANSWER_PATTERN(self) -> str:
@@ -195,7 +195,7 @@ class MaxSAT(Problem):
         return isinstance(answer, str) and len(answer) == self.cnf.nv and set(answer).issubset({"0", "1"})
 
     def accept(self, question: Question, *args, **kwargs) -> str:
-        return question.visit_maxsat(self, *args, **kwargs)
+        return question.visit_maxsat(self.cnf, *args, **kwargs)
 
     @property
     def ANSWER_PATTERN(self) -> str:
@@ -247,7 +247,7 @@ class MCS(Problem):
         return isinstance(answer, str) and len(answer) == self.cnf.mc and set(answer).issubset({"0", "1"})
 
     def accept(self, question: Question, *args, **kwargs) -> str:
-        return question.visit_mcs(self, *args, **kwargs)
+        return question.visit_mcs(self.cnf, *args, **kwargs)
 
     @property
     def ANSWER_PATTERN(self) -> str:
@@ -303,7 +303,7 @@ class MUS(Problem):
         return isinstance(answer, str) and len(answer) == self.cnf.mc and set(answer).issubset({"0", "1"})
 
     def accept(self, question: Question, *args, **kwargs) -> str:
-        return question.visit_mus(self, *args, **kwargs)
+        return question.visit_mus(self.cnf, *args, **kwargs)
 
     @property
     def ANSWER_PATTERN(self) -> str:
