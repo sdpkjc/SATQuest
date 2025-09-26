@@ -4,19 +4,20 @@ SATQuest tracks LLM reasoning across 140 paired CNFs (5 problem types x 4 prompt
 
 ## 📊 Benchmark Results
 
-| Model | Family | Overall accuracy | Notes | Source |
-| --- | --- | --- | --- | --- |
-| o3-mini | Closed reasoning | 0.56 | Highest average accuracy across all SATQuest tasks. | Paper Fig. 2 |
-| DeepSeek-R1 | Open reasoning | 0.42 | Maintains the best open-weight curve as instance complexity rises. | Paper Fig. 2 / Sec. 3 |
-| QwQ-32B | Open reasoning | 0.40 | Drops sharply when moving from math -> story prompts. | Paper Fig. 2 / Sec. 3 |
-| DeepSeek-R1-Distill-Qwen-32B | Distilled reasoning | 0.39 | Retains most of DeepSeek-R1's strength with a smaller footprint. | Paper Fig. 2 |
-| GPT-4.1 | Closed vanilla | 0.38 | Competitive baseline without specialised reasoning tuning. | Paper Fig. 2 |
-| DeepSeek-V3-0324 | Open vanilla | 0.36 | Strongest open-weight vanilla baseline. | Paper Fig. 2 |
-| Qwen2.5-7B-Instruct | Open vanilla | <0.10 | Illustrates the challenge for small instruction-tuned models. | Paper Sec. 3 |
-| DeepSeek-R1-Distill-Qwen-7B | Distilled reasoning | - | Evaluated in Table 1; aggregate accuracy not disclosed. | Paper App. D |
-| Qwen2.5-32B-Instruct | Open vanilla | - | Evaluated in Table 1; aggregate accuracy not disclosed. | Paper App. D |
+| Model                  | Model Type       | Overall accuracy |
+| ---------------------- | ---------------- | ---------------- |
+| 🏆 `o3-mini`           | Closed Reasoning | 0.56             |
+| `DeepSeek-R1`         | Open Reasoning   | 0.42             |
+| `QwQ-32B`             | Open Reasoning   | 0.40             |
+| `DS-R1-Distill-Qwen-32B` | Open Reasoning   | 0.36             |
+| `GPT-4.1`             | Closed vanilla | 0.26             |
+| `DeepSeek-V3-0324`     | Open vanilla   | 0.18             |
+| `DS-R1-Distill-Qwen-7B` | Open Reasoning   | 0.08             |
+| `Qwen2.5-32B-Instruct` | Open Vanilla   | 0.07             |
+| `Qwen2.5-7B-Instruct`  | Open Vanilla   | 0.06             |
 
 _All numbers average across all problem types and prompt formats on `sdpkjc/SATQuest`._
+_For more details, see our [paper](https://arxiv.org/abs/2509.00930)._
 
 ## 📝 How to Submit Results
 

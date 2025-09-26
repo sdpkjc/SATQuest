@@ -4,7 +4,7 @@
 
 <img src="./media/satquest.png" width="450">
 
-<br>
+</div>
 
 [![PyPI](https://img.shields.io/pypi/v/satquest?logo=pypi)](https://pypi.org/project/satquest/)
 [![License](https://img.shields.io/pypi/l/satquest)](https://github.com/sdpkjc/satquest)
@@ -17,8 +17,6 @@
 [![docs](https://img.shields.io/github/deployments/sdpkjc/SATQuest/Production?label=docs&logo=vercel)](https://SATQuest.sdpkjc.com/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![python versions](https://img.shields.io/pypi/pyversions/satquest)](https://pypi.org/project/satquest)
-
-</div>
 
 SATQuest packages CNF-derived logical reasoning tasks, a verifier, and reinforcement fine-tuning (RFT) rewards so you can probe and improve LLM reasoning with controllable difficulty.
 
